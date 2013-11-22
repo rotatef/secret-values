@@ -23,13 +23,13 @@ reduce the risk of the password ending up in a log file or backtrace.
 
 All symbols are exported from the package SECRET-VALUES.
 
-The function CONCEAL-VALUE takes wraps a value into an object of type
+The function CONCEAL-VALUE wraps a value into an object of type
 SECRET-VALUE. An optional name can be provided. The name is intended
 for debugging only and is included when the object is printed.
 
 To get the value back, call REVEAL-VALUE.
 
 The function ENSURE-VALUE-REVEALED behaves like REAVEAL-VALUE when
-called with an argument of type SECRET-VALUE otherwise it just returns
-it's argument. This makes it easy to write code that accepts both
-secret and plaintext values.
+called with an argument of type SECRET-VALUE, otherwise it just
+returns it's argument verbatim. This makes it easy to write code that
+accepts both secret and plaintext values.
