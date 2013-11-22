@@ -1,32 +1,33 @@
 (in-package :secret-values)
 
 
-(defstruct secret-values
-  (closure)
-  (count))
+(defstruct secret-value
+  (name)
+  (symbol))
 
 
-(defmethod print-object ((object secret-values) stream)
+(defmethod print-object ((object secret-value) stream)
   (print-unreadable-object (object stream :type t :identity t)
-    (format stream "~A values" (secret-values-count object))))
+    (princ (secret-value-name object) stream)))
 
 
-(defun conceal-values (&rest values)
-  "Conceals values into a SECRET-VALUES object."
-  ;; wrapping the secret values in a closure reduces the chance of
-  ;; accidently revealing the values.
-  (make-secret-values :count (length values)
-                      :closure (lambda () values)))
+(defun conceal-value (value &key (name ""))
+  "Conceals value into a SECRET-VALUE object. An optional name can be
+provided to aid debugging."
+  (check-type name string)
+  (let ((symbol (gensym name)))
+    (setf (get symbol 'secret) (lambda () value))
+    (make-secret-value :name name :symbol symbol)))
 
 
-(defun reveal-values (secret-values)
-  "Returns the values in SECRET-VALUES as multiple values.
-An error of type TYPE-ERROR is signalled if the argument is not of type SECRET-VALUES."
-  (values-list (funcall (secret-values-closure secret-values))))
+(defun reveal-value (secret-value)
+  "Returns the value in SECRET-VALUE. An error of type TYPE-ERROR is
+ signalled if the argument is not of type SECRET-VALUES."
+  (funcall (get (secret-value-symbol secret-value) 'secret)))
 
 
-(defun ensure-values-revealed (object)
-  "If object is type SECRET-VALUES returns the values in SECRET-VALUES as multiple values, otherwise returns object."
+(defun ensure-value-revealed (object)
+  "If object is type SECRET-VALUE returns the concealed value, otherwise returns object."
   (typecase object
-    (secret-values (reveal-values object))
+    (secret-value (reveal-value object))
     (t object)))

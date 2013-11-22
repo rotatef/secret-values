@@ -1,8 +1,8 @@
 (defpackage #:secret-values
   (:use #:common-lisp)
   (:export
-   #:secret-values
-   #:secret-values-p
-   #:conceal-values
-   #:reveal-values
-   #:ensure-values-revealed))
+   #:secret-value
+   #:secret-value-p
+   #:conceal-value
+   #:reveal-value
+   #:ensure-value-revealed))
