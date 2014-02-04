@@ -26,6 +26,14 @@ provided to aid debugging."
   (funcall (get (secret-value-symbol secret-value) 'secret)))
 
 
+(defun ensure-value-concealed (object &key (name ""))
+  "If object is already a of type SECRET-VALUE returns is unaltered,
+  otherwise conceals it as if by calling CONCEAL-VALUE."
+  (typecase object
+    (secret-value object)
+    (t (conceal-value object :name name))))
+
+
 (defun ensure-value-revealed (object)
   "If object is type SECRET-VALUE returns the concealed value, otherwise returns object."
   (typecase object

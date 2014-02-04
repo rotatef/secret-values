@@ -5,4 +5,5 @@
    #:secret-value-p
    #:conceal-value
    #:reveal-value
+   #:ensure-value-concealed
    #:ensure-value-revealed))
