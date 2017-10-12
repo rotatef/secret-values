@@ -1,7 +1,7 @@
 Secret values is a Common Lisp library designed to reduce the risk of
 accidentally revealing secret values such as passwords.
 
-Source code at https://github.com/copyleft/secret-values
+Source code at https://github.com/rotatef/secret-values
 
 Applications will often have to deal with values that should be kept
 secret, e.g. a password for accessing the applications database. There
